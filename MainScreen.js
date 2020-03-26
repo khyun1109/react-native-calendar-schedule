@@ -4,67 +4,14 @@ import Header from './app/components/Header';
 import moment from 'moment';
 import EditScreen from './app/screens/Edit';
 import { SafeAreaView } from 'react-navigation';
-import { createStackNavigator } from '@react-navigation/stack';
-import {useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import EventCalendar from './app/components/EventCalendar';
 import {FAB} from 'react-native-paper';
 
-const MainStack = createStackNavigator();
-const ScreenContainer = ({children}) => (
-  <View style = {styles.container}> {children} </View>
-);
 
-export default function MainScreen() {
-  const navigation = useNavigation();
-  return (
-    <>
-    <MainStack.Navigator
-      screenOptions = {{
-        headerShown : false,
-      }}>
-      <MainStack.Screen
-      name = "Main" 
-      component = {MainContents}
-      />
-      <MainStack.Screen
-      name = "Edit"
-      component = {EditScreen}
-      />
-    </MainStack.Navigator>
-    <FAB
-      onPress={() => {navigation.navigate('Edit', { screen : 'EditScreen'})}}
-      icon = "pencil"
-      style = {{
-        position: 'absolute',
-        bottom: 10,
-        right: 20,
-      }}
-      color = "white"
-    />
-    </>
-  );
-};
-
-const FButton = ({ navigation }) => {
-  return(
-    <ScreenContainer>
-      <FAB
-        onPress={() =>{
-        } }
-        icon = "pencil"
-        style = {{
-        position: 'absolute',
-        bottom: 60,
-        right: 20,
-        }}
-        color = "white"
-      />
-    </ScreenContainer>
-  )
-}
 
 let { width } = Dimensions.get('window');
-class MainContents extends React.Component {
+export default class MainContents extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -104,9 +51,28 @@ class MainContents extends React.Component {
           scrollToFirst={false}
 
         />
+        <Fabbutton/>
       </SafeAreaView>
     );
   }
+}
+
+function Fabbutton() {
+  const navigation = useNavigation();
+  return(
+    <View> 
+      <FAB
+        onPress={() => {navigation.navigate('EditScreen', {screen : 'EditScreen'})}}
+        icon = "pencil"
+        style = {{
+          position: 'absolute',
+          bottom: 30,
+          right: 20,
+        }}
+        color = "white"
+      />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
